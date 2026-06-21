@@ -37,7 +37,10 @@ public class MusicMenu {
 
             switch (resp){
                 case 1 -> {
+                    System.out.println("Digite o nome da música.");
+                    String nomeMusic = input.nextLine();
 
+                    musicService.addMusic(nomeMusic);
                 }
             }
         }

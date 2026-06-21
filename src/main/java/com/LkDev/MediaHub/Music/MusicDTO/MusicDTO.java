@@ -1,5 +1,6 @@
-package com.LkDev.MediaHub.Music.DTOs;
+package com.LkDev.MediaHub.Music.MusicDTO;
 
+import com.LkDev.MediaHub.Music.ArtistDTOs.ArtistaDTO;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

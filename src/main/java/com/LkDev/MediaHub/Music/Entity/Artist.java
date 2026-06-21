@@ -21,7 +21,6 @@ public class Artist {
     private String name;
 
     @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_artist")
     private List<Music> musics = new ArrayList<>();
 
     public Artist(String name) {

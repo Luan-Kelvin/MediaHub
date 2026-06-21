@@ -20,7 +20,8 @@ public class Music {
 
     private Long listeners;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "id_artist")
     private Artist artist;
 
     public Music(String nome, Long listeners, Artist artist) {

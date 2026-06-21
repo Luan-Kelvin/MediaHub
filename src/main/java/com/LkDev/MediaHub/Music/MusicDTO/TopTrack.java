@@ -1,4 +1,4 @@
-package com.LkDev.MediaHub.Music.DTOs;
+package com.LkDev.MediaHub.Music.MusicDTO;
 
 import java.util.List;
 
