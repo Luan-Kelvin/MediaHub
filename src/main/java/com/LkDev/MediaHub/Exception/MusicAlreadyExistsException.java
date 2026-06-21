@@ -1,4 +1,4 @@
-package com.LkDev.MediaHub.Music.ExeptionsMusic;
+package com.LkDev.MediaHub.Exception;
 
 public class MusicAlreadyExistsException extends RuntimeException {
     public MusicAlreadyExistsException(String message) {

@@ -19,5 +19,9 @@ public class MediaHubApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		mainMenu.displayMenu();
+
+		// Melhore o metodod de adicionar musica, faça uma nov versao para procurar musica por
+		// nome da musica e do artista expecifico
+		// e continue no menu de musicas
 	}
 }

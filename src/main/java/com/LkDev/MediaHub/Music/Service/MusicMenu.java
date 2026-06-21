@@ -42,6 +42,13 @@ public class MusicMenu {
 
                     musicService.addMusic(nomeMusic);
                 }
+
+                case 2 -> {
+                    System.out.println("Digite o nome do artista: ");
+                    String nomeArtist = input.nextLine();
+
+                    artistService.addArtist(nomeArtist);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@ import com.LkDev.MediaHub.Api.ConsumeApi;
 import com.LkDev.MediaHub.GeneralService.DTOConverter;
 import com.LkDev.MediaHub.Music.ArtistDTOs.SuperResults;
 import com.LkDev.MediaHub.Music.Entity.Music;
-import com.LkDev.MediaHub.Music.ExeptionsMusic.MusicAlreadyExistsException;
+import com.LkDev.MediaHub.Exception.MusicAlreadyExistsException;
 import com.LkDev.MediaHub.Music.Repository.MusicRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
