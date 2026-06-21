@@ -1,15 +1,19 @@
 package com.LkDev.MediaHub.Music.Service;
 
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
 
 @Service
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class MusicMenu {
     private Scanner input = new Scanner(System.in);
+    private final MusicService musicService;
+    private final ArtistService artistService;
+
 
     public void displayMenu() {
         int resp = 1;
