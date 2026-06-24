@@ -1,6 +1,5 @@
 package com.LkDev.MediaHub.Music.Service;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,14 @@ public class MusicMenu {
                     System.out.println("Digite o nome da música.");
                     String nomeMusic = input.nextLine();
 
-                    musicService.addMusic(nomeMusic);
+                    System.out.println("Digite nome Do Artista");
+                    String nomeArtist = input.nextLine();
+
+                    if (nomeArtist.isEmpty()){
+                        musicService.addMusic(nomeMusic);
+                    }else {
+                        musicService.addMusic(nomeMusic, nomeArtist);
+                    }
                 }
 
                 case 2 -> {

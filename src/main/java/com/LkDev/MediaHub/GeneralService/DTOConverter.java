@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,22 @@ public class DTOConverter {
             return new Music(dto.nomeMusic(), dto.listeners(), artist);
         }
 
+    }
+
+    @Transactional
+    public List<Music> converterListMusic(List<TrackMusicArtist> dtos){
+        return dtos.stream()
+                .map(dto -> {
+                    Optional<Artist> artistRep = artistRepository.findByNameIgnoreCase(dto.nomeArtist());
+                    Artist artist;
+                    if (artistRep.isPresent()){
+                        artist = artistRep.get();
+                    }else {
+                        artist = new Artist(dto.nomeArtist());
+                    }
+                    return new Music(dto.nomeArtist(), dto.listeners(), artist);
+                })
+                .toList();
     }
 
     public Artist converterArtist(ArtistaDTO dto){
