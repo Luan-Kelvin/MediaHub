@@ -20,7 +20,7 @@ public class Artist {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Music> musics = new ArrayList<>();
 
     public Artist(String name) {

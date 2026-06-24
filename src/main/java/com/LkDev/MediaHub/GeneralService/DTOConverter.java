@@ -47,7 +47,7 @@ public class DTOConverter {
                     }else {
                         artist = new Artist(dto.nomeArtist());
                     }
-                    return new Music(dto.nomeArtist(), dto.listeners(), artist);
+                    return new Music(dto.nomeMusic(), dto.listeners(), artist);
                 })
                 .toList();
     }

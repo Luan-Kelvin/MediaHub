@@ -57,7 +57,7 @@ public class MusicService {
 
     @Transactional
     public void addMusic(String nameMusic, String nameCantor){
-        Optional<Music> musicRep = musicRepository.findByNomeIgnoreCase(nameMusic);
+        Optional<Music> musicRep = musicRepository.findByNomeIgnoreCaseAndArtist_NameIgnoreCase(nameMusic, nameCantor);
 
         if (musicRep.isPresent()){
             throw new MusicAlreadyExistsException("Música já esta cadastrada no Data Base.");
@@ -80,6 +80,9 @@ public class MusicService {
                                     .findFirst()
                                             .orElseThrow();
 
+            System.out.println("MUSICA ESCOLHIDA:");
+            System.out.println(music.getNome());
+            System.out.println(music.getArtist().getName());
             musicRepository.save(music);
 
             System.out.println("Música " + nameMusic + " de " + music.getArtist().getName() + " salvo com sucesso!");
