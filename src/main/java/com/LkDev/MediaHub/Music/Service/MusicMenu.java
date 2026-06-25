@@ -25,9 +25,8 @@ public class MusicMenu {
             System.out.println("[ 5 ] -> BUSCAR MÚSICAS DE ARTISTA.");
             System.out.println("[ 6 ] -> LISTAR MÚSICAS CADASTRADAS.");
             System.out.println("[ 7 ] -> LISTAR ARTISTAS CADASTRADOS.");
-            System.out.println("[ 8 ] -> LISTAR MÚSICAS DE UM ARTISTA EXPECIFICO.");
-            System.out.println("[ 9 ] -> VER MÚSICA MAIS OUVIDA.");
-            System.out.println("[ 10 ] -> VER ARTISTA MAIS OUVIDO.");
+            System.out.println("[ 8 ] -> VER MÚSICA MAIS OUVIDA.");
+            System.out.println("[ 9 ] -> VER ARTISTA MAIS OUVIDO.");
             System.out.println("[ 0 ] -> SAIR.");
             System.out.println("-----------------------------------------------------");
             System.out.println("Escolha uma das opções acima: ");
@@ -72,6 +71,12 @@ public class MusicMenu {
 
                     musicService.SearchForAnArtistSong(nomeArtist);
                 }
+
+                case 6 -> musicService.listMusicsInDataBAse();
+
+                case 7 -> musicService.listArtistsInDataBase();
+
+                case 8 -> musicService.showMostPlayedsong();
             }
         }
     }
