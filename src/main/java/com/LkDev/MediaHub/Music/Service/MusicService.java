@@ -5,6 +5,7 @@ import com.LkDev.MediaHub.Exception.ArtistsDoesNotExiststException;
 import com.LkDev.MediaHub.Exception.MusicDoesNotExists;
 import com.LkDev.MediaHub.GeneralService.DTOConverter;
 import com.LkDev.MediaHub.Music.ArtistDTOs.SuperResults;
+import com.LkDev.MediaHub.Music.ArtistDTOs.TopArtistDTO;
 import com.LkDev.MediaHub.Music.Entity.Artist;
 import com.LkDev.MediaHub.Music.Entity.Music;
 import com.LkDev.MediaHub.Exception.MusicAlreadyExistsException;
@@ -129,5 +130,21 @@ public class MusicService {
         System.out.println(">>> TOTAL DE ARTISTAS CADASTRADOS: "+artists.size());
         artists.forEach(System.out::println);
         System.out.println("---------------------------------------------");
+    }
+
+    public void showMostPlayedsong(){
+        Music music = musicRepository.musicaMaisOuvida();
+
+        System.out.println(">>> Música mais ouvida é: "+music.getNome()+" de "+music.getArtist().getName());
+        System.out.println("Com "+music.getListeners()+" ouvintes.");
+    }
+
+    public void showMostArtists(){
+        TopArtistDTO artistDTO = artistRepository.artistaMaisOuvido().get(0);
+
+        System.out.println(">>> Artista mais ouvida é: "+artistDTO.getNome());
+        System.out.println("Com "+artistDTO.getTotalOuvinte()+" ouvintes.");
+
+
     }
 }

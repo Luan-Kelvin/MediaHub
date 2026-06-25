@@ -26,4 +26,14 @@ public interface MusicRepository extends JpaRepository<Music, Long> {
             WHERE LOWER(a.name) LIKE LOWER(:nomeArtist)
             """)
     List<Music> buscarMusicasDeArtista(String nomeArtist);
+
+    @Query("""
+            SELECT m
+            FROM Music m
+            WHERE m.listeners = (
+                SELECT MAX(m2.listeners)
+                FROM Music m2
+            )
+            """)
+    Music musicaMaisOuvida();
 }

@@ -77,6 +77,8 @@ public class MusicMenu {
                 case 7 -> musicService.listArtistsInDataBase();
 
                 case 8 -> musicService.showMostPlayedsong();
+
+                case 9 -> musicService.showMostArtists();
             }
         }
     }
