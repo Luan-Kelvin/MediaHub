@@ -57,7 +57,13 @@ public class MusicMenu {
                     String nameMusic = input.nextLine();
 
                     musicService.SearchMusicInDataBase(nameMusic);
+                }
 
+                case 4 -> {
+                    System.out.println("Digite um trecho do nome da música: ");
+                    String trecho = input.nextLine();
+
+                    musicService.SearchMusicBySnippet(trecho);
                 }
             }
         }

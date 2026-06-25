@@ -74,4 +74,17 @@ public class MusicService {
         music.stream().sorted(Comparator.comparing(Music::getListeners).reversed()).forEach(System.out::println);
         System.out.println("----------------------------------------");
     }
+
+    public void SearchMusicBySnippet(String trecho){
+        List<Music> musics = musicRepository.buscarMusicaPorTrecho(trecho);
+
+        if (musics.isEmpty()){
+            System.out.println("Não foi encontrado nenhuma música comesse trecho:"+trecho);
+            return;
+        }
+
+        System.out.println(">>> TOTAL DE MÚSICAS ENCONTRADAS: "+musics.size());
+        musics.stream().sorted(Comparator.comparing(Music::getListeners).reversed()).forEach(System.out::println);
+        System.out.println("----------------------------------------");
+    }
 }
