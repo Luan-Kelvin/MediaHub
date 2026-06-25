@@ -19,4 +19,11 @@ public interface MusicRepository extends JpaRepository<Music, Long> {
             WHERE LOWER(m.nome) ILIKE CONCAT('%', :trecho, '%')
             """)
     List<Music> buscarMusicaPorTrecho(String trecho);
+
+    @Query("""
+            SELECT a.musics
+            FROM Artist a
+            WHERE LOWER(a.name) LIKE LOWER(:nomeArtist)
+            """)
+    List<Music> buscarMusicasDeArtista(String nomeArtist);
 }

@@ -22,7 +22,7 @@ public class MusicMenu {
             System.out.println("[ 2 ] -> ADICIONAR NOVO ARTISTA.");
             System.out.println("[ 3 ] -> BUSCAR MÚSICA EXISTENTE.");
             System.out.println("[ 4 ] -> BUSCAR MÚSICA POR TRECHO.");
-            System.out.println("[ 5 ] -> BUSCAR MÚSICA POR ARTISTA.");
+            System.out.println("[ 5 ] -> BUSCAR MÚSICAS DE ARTISTA.");
             System.out.println("[ 6 ] -> LISTAR MÚSICAS CADASTRADAS.");
             System.out.println("[ 7 ] -> LISTAR ARTISTAS CADASTRADOS.");
             System.out.println("[ 8 ] -> LISTAR MÚSICAS DE UM ARTISTA EXPECIFICO.");
@@ -64,6 +64,13 @@ public class MusicMenu {
                     String trecho = input.nextLine();
 
                     musicService.SearchMusicBySnippet(trecho);
+                }
+
+                case 5 -> {
+                    System.out.println("Digite o nome do artista.");
+                    String nomeArtist = input.nextLine();
+
+                    musicService.SearchForAnArtistSong(nomeArtist);
                 }
             }
         }

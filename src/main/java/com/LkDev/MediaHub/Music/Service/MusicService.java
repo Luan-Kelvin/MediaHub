@@ -1,6 +1,7 @@
 package com.LkDev.MediaHub.Music.Service;
 
 import com.LkDev.MediaHub.Api.ConsumeApi;
+import com.LkDev.MediaHub.Exception.ArtistsDoesNotExiststException;
 import com.LkDev.MediaHub.Exception.MusicDoesNotExists;
 import com.LkDev.MediaHub.GeneralService.DTOConverter;
 import com.LkDev.MediaHub.Music.ArtistDTOs.SuperResults;
@@ -83,6 +84,19 @@ public class MusicService {
             return;
         }
 
+        System.out.println(">>> TOTAL DE MÚSICAS ENCONTRADAS: "+musics.size());
+        musics.stream().sorted(Comparator.comparing(Music::getListeners).reversed()).forEach(System.out::println);
+        System.out.println("----------------------------------------");
+    }
+
+    public void SearchForAnArtistSong(String nameArtist){
+        List<Music> musics = musicRepository.buscarMusicasDeArtista(nameArtist);
+
+        if (musics.isEmpty()){
+            throw new ArtistsDoesNotExiststException("Artista não esta cadastrado no banco.");
+        }
+
+        System.out.println(">>> ARTISTA: "+nameArtist);
         System.out.println(">>> TOTAL DE MÚSICAS ENCONTRADAS: "+musics.size());
         musics.stream().sorted(Comparator.comparing(Music::getListeners).reversed()).forEach(System.out::println);
         System.out.println("----------------------------------------");
