@@ -31,4 +31,11 @@ public class Music {
 
         artist.getMusics().add(this);
     }
+
+    @Override
+    public String toString() {
+        return "Nome = " + nome +
+                ", Listeners = " + listeners +
+                ", Artist = " + artist.getName();
+    }
 }

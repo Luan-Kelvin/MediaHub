@@ -42,11 +42,7 @@ public class MusicMenu {
                     System.out.println("Digite nome Do Artista");
                     String nomeArtist = input.nextLine();
 
-                    if (nomeArtist.isEmpty()){
-                        musicService.addMusic(nomeMusic);
-                    }else {
-                        musicService.addMusic(nomeMusic, nomeArtist);
-                    }
+                    musicService.addMusic(nomeMusic, nomeArtist);
                 }
 
                 case 2 -> {
@@ -54,6 +50,14 @@ public class MusicMenu {
                     String nomeArtist = input.nextLine();
 
                     artistService.addArtist(nomeArtist);
+                }
+
+                case 3 -> {
+                    System.out.println("Digite o nome da músicas");
+                    String nameMusic = input.nextLine();
+
+                    musicService.SearchMusicInDataBase(nameMusic);
+
                 }
             }
         }
