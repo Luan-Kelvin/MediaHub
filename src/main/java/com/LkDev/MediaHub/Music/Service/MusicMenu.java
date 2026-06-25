@@ -79,6 +79,10 @@ public class MusicMenu {
                 case 8 -> musicService.showMostPlayedsong();
 
                 case 9 -> musicService.showMostArtists();
+
+                case 0 -> System.out.println("Encerrando programa...");
+
+                default -> System.out.println("Escolha uma opção válida.");
             }
         }
     }
