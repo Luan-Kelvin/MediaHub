@@ -1,5 +1,6 @@
 package com.LkDev.MediaHub.Menu;
 
+import com.LkDev.MediaHub.Books.Services.BookMenu;
 import com.LkDev.MediaHub.Music.Service.MusicMenu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class MainMenu {
      private Scanner input = new Scanner(System.in);
      private final MusicMenu musicMenu;
+     private final BookMenu bookMenu;
 
      public void displayMenu(){
          int resp = 1;
@@ -28,6 +30,8 @@ public class MainMenu {
 
              switch (resp){
                 case 1 -> musicMenu.displayMenu();
+
+                case 2 -> bookMenu.displayMenu();
              }
              System.out.println(">>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<");
          }
