@@ -27,9 +27,12 @@ public class Book {
     @JoinColumn(name = "id_author")
     private Author author;
 
-    public Book(String title, Integer yearOfPublication, Integer numberOfEditionn) {
+    public Book(String title, Integer yearOfPublication, Integer numberOfEditionn, Author author) {
         this.title = title;
         this.yearOfPublication = yearOfPublication;
         this.numberOfEditionn = numberOfEditionn;
+        this.author = author;
+
+        this.author.getBooks().add(this);
     }
 }

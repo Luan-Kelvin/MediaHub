@@ -21,6 +21,7 @@ public class MediaHubApplication implements CommandLineRunner {
 		mainMenu.displayMenu();
 
 
-		// e continue no menu de musicas
+		// Ja foi feita DTO e entidade de livro e autor, no autor as informações dlee vem da dto livro, enato so sue ela
+		// comece a fazer as conigurações para livro no bookMenu
 	}
 }
