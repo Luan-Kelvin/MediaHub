@@ -13,6 +13,7 @@ import com.LkDev.MediaHub.GeneralService.DTOConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +59,7 @@ public class BookService {
            System.out.println("Escolha uma das opções acima (Selecione número do índice).)");
            int escolhaLivro = Integer.parseInt(input.nextLine());
 
-           Book book = dtoConverter.converterBook(dtos.get(escolhaLivro));
+           Book book = dtoConverter.converterBook(dtos.get(escolhaLivro - 1));
 
            repositoryBook.save(book);
            System.out.println("Livro "+book.getTitle()+" salvo com sucesso!");
@@ -68,13 +70,8 @@ public class BookService {
        }
     }
 
-    private void addAuthor(String nomeAutor){
-        Optional<Author> authorOptional = respositoryAuthor.findByAuthorNameIgnoreCase(nomeAutor);
-
-        if (authorOptional.isPresent()){
-            throw new AuthroAlreadyExiststException("Erro! Autor "+nomeAutor+" já esta cadastrado em banco de dados.");
-        }
-
+    @Transactional
+    public void addAuthor(String nomeAutor){
         try {
             String endereco = "https://openlibrary.org/search.json?author="+nomeAutor.trim().replace(" ", "+").toLowerCase();
 
@@ -84,13 +81,38 @@ public class BookService {
 
             List<LivroDTO> dtos = mainDTO.docs();
 
+            Optional<Author> authorOptional = respositoryAuthor.findByAuthorKeyIgnoreCase(dtos.get(0).chaveAutor().get(0));
+
+            if (authorOptional.isPresent()){
+                throw new AuthroAlreadyExiststException("Erro! Autor "+nomeAutor+" já esta cadastrado em banco de dados.");
+            }
+
             Author author = new Author(dtos.get(0).chaveAutor().get(0), dtos.get(0).nomeAutor().get(0));
 
             respositoryAuthor.save(author);
             System.out.println("Autor "+author.getAuthorName()+" salvo com sucesso!");
 
+            System.out.println("Deseja persisti todos os livros deste autor ? [SIM/NAO]");
+            String escolha = input.nextLine();
+
+            if (escolha.equalsIgnoreCase("SIM")){
+                List<LivroDTO> novaListaDto = dtos.stream()
+                        .distinct()
+                        .filter(l -> !repositoryBook.existsByTitleIgnoreCase(l.titulo()))
+                        .toList();
+
+                novaListaDto.forEach(bookDto -> {
+                    Book book = dtoConverter.converterBook(bookDto);
+
+                    repositoryBook.save(book);
+                    System.out.println(book.getTitle()+" salvo com sucesso!");
+                });
+            }
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }

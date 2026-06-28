@@ -63,7 +63,7 @@ public class DTOConverter {
 
 
     public Book converterBook(LivroDTO dto){
-        Optional<Author> authorOptional = respositoryAuthor.findByAuthorNameIgnoreCase(dto.nomeAutor().get(0));
+        Optional<Author> authorOptional = respositoryAuthor.findByAuthorKeyIgnoreCase(dto.chaveAutor().get(0));
         Author author;
         if (authorOptional.isPresent()){
             author = authorOptional.get();

@@ -1,9 +1,12 @@
 package com.LkDev.MediaHub.Books.Entity;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "books", schema = "musics_and_artist")
@@ -16,7 +19,6 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String title;
 
     private Integer yearOfPublication;
@@ -34,5 +36,17 @@ public class Book {
         this.author = author;
 
         this.author.getBooks().add(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(id, book.id) && Objects.equals(title, book.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title);
     }
 }
