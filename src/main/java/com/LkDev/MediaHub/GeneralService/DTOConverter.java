@@ -1,5 +1,9 @@
 package com.LkDev.MediaHub.GeneralService;
 
+import com.LkDev.MediaHub.Books.DTOs.LivroDTO;
+import com.LkDev.MediaHub.Books.Entity.Author;
+import com.LkDev.MediaHub.Books.Entity.Book;
+import com.LkDev.MediaHub.Books.Repository.RespositoryAuthor;
 import com.LkDev.MediaHub.Music.ArtistDTOs.ArtistaDTO;
 import com.LkDev.MediaHub.Music.ArtistDTOs.TrackMusicArtist;
 import com.LkDev.MediaHub.Music.Entity.Artist;
@@ -17,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DTOConverter {
     private final ArtistRepository artistRepository;
+    private final RespositoryAuthor respositoryAuthor;
 
     public Music converterMusic(MusicDTO dto){
         return new Music(dto.nomeMusica(), dto.listeners(), converterArtist(dto.artistaDTO()));
@@ -54,5 +59,19 @@ public class DTOConverter {
 
     public Artist converterArtist(ArtistaDTO dto){
         return new Artist(dto.nomeArtista());
+    }
+
+
+    public Book converterBook(LivroDTO dto){
+        Optional<Author> authorOptional = respositoryAuthor.findByAuthorNameIgnoreCase(dto.nomeAutor().get(0));
+        Author author;
+        if (authorOptional.isPresent()){
+            author = authorOptional.get();
+        }else {
+            author = new Author(dto.chaveAutor().get(0), dto.nomeAutor().get(0));
+            respositoryAuthor.save(author);
+        }
+
+        return new Book(dto.titulo(), dto.anoPublicacao(), dto.quantidadeEdicoes(), author);
     }
 }

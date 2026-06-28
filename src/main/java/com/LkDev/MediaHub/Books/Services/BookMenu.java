@@ -9,6 +9,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class BookMenu {
     private Scanner input = new Scanner(System.in);
+    private final BookService bookService;
 
     public void displayMenu(){
         int resp = 1;
@@ -29,6 +30,15 @@ public class BookMenu {
            System.out.println("Escolha uma das opções acima: ");
            resp = Integer.parseInt(input.nextLine());
            System.out.println("*****************************************************");
+
+           switch (resp){
+               case 1 -> {
+                   System.out.println("Digite o titulo do livro para cadastrar: ");
+                   String tituloLivro = input.nextLine();
+
+                   bookService.addBook(tituloLivro);
+               }
+           }
        }
     }
 }
