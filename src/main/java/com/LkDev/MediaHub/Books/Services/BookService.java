@@ -7,6 +7,7 @@ import com.LkDev.MediaHub.Books.Entity.Author;
 import com.LkDev.MediaHub.Books.Entity.Book;
 import com.LkDev.MediaHub.Books.Repository.RepositoryBook;
 import com.LkDev.MediaHub.Books.Repository.RespositoryAuthor;
+import com.LkDev.MediaHub.Exception.AuthorDoesNotExistsException;
 import com.LkDev.MediaHub.Exception.AuthroAlreadyExiststException;
 import com.LkDev.MediaHub.Exception.BookAlreadyExistsExcepiton;
 import com.LkDev.MediaHub.GeneralService.DTOConverter;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -114,5 +114,30 @@ public class BookService {
         }
     }
 
+    // PAREI AQUI NESSE METODO
+    public void downloadBooksByAuthor(String nomeAutor){
+        Optional<Author>  author = respositoryAuthor.findByAuthorNameIgnoreCase(nomeAutor);
 
+        if (!author.isPresent()){
+            throw new AuthorDoesNotExistsException("ERRO! Autor "+nomeAutor+" não existe no banco de dados.");
+        }
+
+        try {
+            String endereco = "https://openlibrary.org/search.json?author="+nomeAutor.trim().replace(" ", "+").toLowerCase();
+
+            String json = consumeApi.makeRequest(endereco);
+
+            MainDTO mainDTO = mapper.readValue(json, MainDTO.class);
+
+            List<LivroDTO> livros = mainDTO.docs();
+
+
+        } catch (JsonMappingException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
 }

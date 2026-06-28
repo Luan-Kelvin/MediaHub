@@ -21,7 +21,6 @@ public class MediaHubApplication implements CommandLineRunner {
 		mainMenu.displayMenu();
 
 
-		// Ja foi feita DTO e entidade de livro e autor, no autor as informações dlee vem da dto livro, enato so sue ela
-		// comece a fazer as conigurações para livro no bookMenu
+		// TERMINAR O METODO DE BAIXAR A LISTA DE LIVROS DE UM AUTOR EXISTENTE, PEGUE A LISTA E LEBRE DE NAO BAIXAR OS COM AUTOR NULLO
 	}
 }
