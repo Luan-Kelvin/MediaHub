@@ -3,12 +3,15 @@ package com.LkDev.MediaHub.Books.Services;
 import com.LkDev.MediaHub.Api.ConsumeApi;
 import com.LkDev.MediaHub.Books.DTOs.LivroDTO;
 import com.LkDev.MediaHub.Books.DTOs.MainDTO;
+import com.LkDev.MediaHub.Books.Entity.Author;
 import com.LkDev.MediaHub.Books.Entity.Book;
 import com.LkDev.MediaHub.Books.Repository.RepositoryBook;
 import com.LkDev.MediaHub.Books.Repository.RespositoryAuthor;
+import com.LkDev.MediaHub.Exception.AuthroAlreadyExiststException;
 import com.LkDev.MediaHub.Exception.BookAlreadyExistsExcepiton;
 import com.LkDev.MediaHub.GeneralService.DTOConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -63,6 +66,31 @@ public class BookService {
        } catch (JsonProcessingException e) {
            throw new RuntimeException(e);
        }
+    }
 
+    private void addAuthor(String nomeAutor){
+        Optional<Author> authorOptional = respositoryAuthor.findByAuthorNameIgnoreCase(nomeAutor);
+
+        if (authorOptional.isPresent()){
+            throw new AuthroAlreadyExiststException("Erro! Autor "+nomeAutor+" já esta cadastrado em banco de dados.");
+        }
+
+        try {
+            String endereco = "https://openlibrary.org/search.json?author="+nomeAutor.trim().replace(" ", "+").toLowerCase();
+
+            String json = consumeApi.makeRequest(endereco);
+
+            MainDTO mainDTO = mapper.readValue(json, MainDTO.class);
+
+            List<LivroDTO> dtos = mainDTO.docs();
+
+            Author author = new Author(dtos.get(0).chaveAutor().get(0), dtos.get(0).nomeAutor().get(0));
+
+            respositoryAuthor.save(author);
+            System.out.println("Autor "+author.getAuthorName()+" salvo com sucesso!");
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

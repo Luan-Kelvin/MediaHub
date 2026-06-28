@@ -38,6 +38,13 @@ public class BookMenu {
 
                    bookService.addBook(tituloLivro);
                }
+
+               case 2 -> {
+                   System.out.println("Digite o nome do Autor: ");
+                   String nomeAutor = input.nextLine();
+
+                   bookService.addAuthor(nomeAutor);
+               }
            }
        }
     }

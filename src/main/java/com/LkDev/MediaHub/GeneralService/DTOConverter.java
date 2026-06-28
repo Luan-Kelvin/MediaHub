@@ -74,4 +74,8 @@ public class DTOConverter {
 
         return new Book(dto.titulo(), dto.anoPublicacao(), dto.quantidadeEdicoes(), author);
     }
+
+    public Author converterAutor(LivroDTO dto){
+        return new Author(dto.chaveAutor().get(0), dto.nomeAutor().get(0));
+    }
 }
