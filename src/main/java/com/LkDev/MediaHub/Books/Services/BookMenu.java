@@ -53,6 +53,13 @@ public class BookMenu {
 
                    bookService.downloadBooksByAuthor(nomeAutor);
                }
+
+               case 4 -> {
+                   System.out.println("Digite o titulo do livro: ");
+                   String tituloLivro = input.nextLine();
+
+                   bookService.SearchBookAnExisting(tituloLivro);
+               }
            }
        }
     }

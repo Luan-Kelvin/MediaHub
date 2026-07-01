@@ -10,6 +10,7 @@ import com.LkDev.MediaHub.Books.Repository.RespositoryAuthor;
 import com.LkDev.MediaHub.Exception.AuthorDoesNotExistsException;
 import com.LkDev.MediaHub.Exception.AuthroAlreadyExiststException;
 import com.LkDev.MediaHub.Exception.BookAlreadyExistsExcepiton;
+import com.LkDev.MediaHub.Exception.BookDoesNotExistInDataBaseException;
 import com.LkDev.MediaHub.GeneralService.DTOConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -34,13 +35,8 @@ public class BookService {
     private final RepositoryBook repositoryBook;
     private final RespositoryAuthor respositoryAuthor;
 
+    @Transactional
     public void addBook(String nameBook){
-        Optional<Book> bookRepo = repositoryBook.findByTitleIgnoreCase(nameBook);
-
-        if (bookRepo.isPresent()){
-            throw new BookAlreadyExistsExcepiton("ERRO! Livro "+nameBook+" ja está cadastrado.");
-        }
-
        try {
            String endereco = "https://openlibrary.org/search.json?title="+nameBook.trim().replace(" ", "+").toLowerCase();
 
@@ -61,6 +57,12 @@ public class BookService {
            int escolhaLivro = Integer.parseInt(input.nextLine());
 
            Book book = dtoConverter.converterBook(dtos.get(escolhaLivro - 1));
+
+           Optional<Book> bookRepo = repositoryBook.findByTitleIgnoreCaseAndAuthorAuthorKey(book.getTitle(), book.getAuthor().getAuthorKey());
+
+           if (bookRepo.isPresent()){
+               throw new BookAlreadyExistsExcepiton("ERRO! Livro "+nameBook+" ja está cadastrado.");
+           }
 
            repositoryBook.save(book);
            System.out.println("Livro "+book.getTitle()+" salvo com sucesso!");
@@ -157,7 +159,18 @@ public class BookService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Transactional
+    public void SearchBookAnExisting(String titulo){
+        Optional<Book> book = repositoryBook.findByTitleIgnoreCase(titulo);
 
+        if (!book.isPresent()){
+            throw new BookDoesNotExistInDataBaseException("ERRO! Livro Não esta cadastrado no banco.");
+        }
+
+        System.out.println(">>>>> LIVRO ENCONTRADO");
+        System.out.println(book.get());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
     }
 }
