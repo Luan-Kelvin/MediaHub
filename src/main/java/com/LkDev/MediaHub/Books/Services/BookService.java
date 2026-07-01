@@ -187,4 +187,17 @@ public class BookService {
         books.forEach(System.out::println);
         System.out.println("-------------------------------------------");
     }
+
+    @Transactional
+    public void SearchBookByAuthor(String nomeAutor){
+        Optional<Author> author = respositoryAuthor.findByAuthorNameIgnoreCase(nomeAutor);
+
+        if (!author.isPresent()){
+            System.out.println("Autor "+nomeAutor+" não foi encontrado.");
+        }
+
+        System.out.println(">>> LIVROS DE "+author.get().getAuthorName());
+        author.get().getBooks().forEach(System.out::println);
+        System.out.println("-----------------------------------------");
+    }
 }

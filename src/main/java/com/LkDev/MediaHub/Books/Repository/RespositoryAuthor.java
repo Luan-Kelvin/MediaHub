@@ -9,5 +9,6 @@ public interface RespositoryAuthor extends JpaRepository<Author, Long> {
 
     Optional<Author> findByAuthorNameIgnoreCase(String name);
 
+
     Optional<Author> findByAuthorKeyIgnoreCase(String chaveAutor);
 }

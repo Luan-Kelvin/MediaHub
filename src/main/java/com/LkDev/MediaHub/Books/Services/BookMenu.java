@@ -67,6 +67,13 @@ public class BookMenu {
 
                    bookService.SearchForBookExcerpt(trecho);
                }
+
+               case 6 -> {
+                   System.out.println("Digite o nome do autor pra busca: ");
+                   String nomeAutor = input.nextLine();
+
+                   bookService.SearchBookByAuthor(nomeAutor);
+               }
            }
        }
     }
