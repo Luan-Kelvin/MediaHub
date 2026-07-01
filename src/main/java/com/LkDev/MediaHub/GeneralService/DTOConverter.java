@@ -61,6 +61,15 @@ public class DTOConverter {
         return new Artist(dto.nomeArtista());
     }
 
+    public Book converterBook(LivroDTO dto, Author author) {
+        return new Book(
+                dto.titulo(),
+                dto.anoPublicacao(),
+                dto.quantidadeEdicoes(),
+                author
+        );
+    }
+
 
     public Book converterBook(LivroDTO dto){
         Optional<Author> authorOptional = respositoryAuthor.findByAuthorKeyIgnoreCase(dto.chaveAutor().get(0));

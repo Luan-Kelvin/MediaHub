@@ -46,6 +46,13 @@ public class BookMenu {
 
                    bookService.addAuthor(nomeAutor);
                }
+
+               case 3 -> {
+                   System.out.println("Digite o nome do autor: ");
+                   String nomeAutor = input.nextLine();
+
+                   bookService.downloadBooksByAuthor(nomeAutor);
+               }
            }
        }
     }

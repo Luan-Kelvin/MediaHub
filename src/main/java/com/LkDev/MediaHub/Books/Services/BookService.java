@@ -18,6 +18,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -114,9 +115,9 @@ public class BookService {
         }
     }
 
-    // PAREI AQUI NESSE METODO
+    @Transactional
     public void downloadBooksByAuthor(String nomeAutor){
-        Optional<Author>  author = respositoryAuthor.findByAuthorNameIgnoreCase(nomeAutor);
+        Optional<Author> author = respositoryAuthor.findByAuthorNameIgnoreCase(nomeAutor);
 
         if (!author.isPresent()){
             throw new AuthorDoesNotExistsException("ERRO! Autor "+nomeAutor+" não existe no banco de dados.");
@@ -130,6 +131,25 @@ public class BookService {
             MainDTO mainDTO = mapper.readValue(json, MainDTO.class);
 
             List<LivroDTO> livros = mainDTO.docs();
+            List<LivroDTO> downloadedBooks = new ArrayList<>();
+
+            livros.forEach(l -> {
+                Optional<Book> bookExists = repositoryBook.findByTitleIgnoreCase(l.titulo());
+
+                if (!bookExists.isPresent()) {
+                    repositoryBook.save(dtoConverter.converterBook(l, author.get()));
+                    downloadedBooks.add(l);
+                }
+            });
+
+            if (downloadedBooks.isEmpty()){
+                System.out.println("Todos os livros desse autor ja foram salvos.");
+            }
+
+            System.out.println(">>> LIVROS BAIXADOS DE "+nomeAutor+".");
+            downloadedBooks.forEach(l -> System.out.println(l.titulo()));
+            System.out.println("------------------------------------");
+
 
 
         } catch (JsonMappingException e) {
