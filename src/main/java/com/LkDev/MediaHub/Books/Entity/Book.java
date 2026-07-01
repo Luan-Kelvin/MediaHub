@@ -49,4 +49,12 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id, title);
     }
+
+    @Override
+    public String toString() {
+        return "Title = '" + title + '\'' +
+                ", YearOfPublication = " + yearOfPublication +
+                ", NumberOfEditionn = " + numberOfEditionn +
+                ", Author = " + author.getAuthorName();
+    }
 }

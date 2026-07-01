@@ -173,4 +173,18 @@ public class BookService {
         System.out.println(book.get());
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>");
     }
+
+    @Transactional
+    public void SearchForBookExcerpt(String trecho){
+        List<Book> books = repositoryBook.findByTitleContainingIgnoreCase(trecho);
+
+        if (books.isEmpty()){
+            System.out.println("Nenhum livro encontrando com: \' "+trecho+" \'");
+            return;
+        }
+
+        System.out.println(">>> LIVROS ENCONTRADO COM:  \' "+trecho+" \'");
+        books.forEach(System.out::println);
+        System.out.println("-------------------------------------------");
+    }
 }

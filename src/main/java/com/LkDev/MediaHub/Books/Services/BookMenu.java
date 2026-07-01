@@ -60,6 +60,13 @@ public class BookMenu {
 
                    bookService.SearchBookAnExisting(tituloLivro);
                }
+
+               case 5 -> {
+                   System.out.println("Digite um trecho do livro para busca.");
+                   String trecho = input.nextLine();
+
+                   bookService.SearchForBookExcerpt(trecho);
+               }
            }
        }
     }
